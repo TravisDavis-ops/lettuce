@@ -19,7 +19,7 @@
 import sys
 import os
 import lettuce
-from StringIO import StringIO
+from io import StringIO
 
 from nose.tools import assert_equals, assert_true, with_setup
 from sure import expect
@@ -143,8 +143,6 @@ def test_xunit_output_with_no_steps():
     'Test xunit output with no steps'
     called = []
     def assert_correct_xml(filename, content):
-        print filename
-        print content
         called.append(True)
         assert_xsd_valid(filename, content)
         root = etree.fromstring(content)
@@ -167,7 +165,7 @@ def test_xunit_output_with_no_steps():
 def test_xunit_output_with_background_section():
     'Test xunit output with a background section in the feature'
     called = []
-    
+
     def assert_correct_xml(filename, content):
         called.append(True)
         assert_xsd_valid(filename, content)
@@ -181,14 +179,14 @@ def test_xunit_output_with_background_section():
         assert_true(float(passed1.get("time")) > 0)
         assert_equals(passed2.get("name"), 'Given the variable "X" is equal to 2')
         assert_true(float(passed2.get("time")) > 0)
-    
+
     from lettuce import step
-    
-    @step(ur'the variable "(\w+)" holds (\d+)')
-    @step(ur'the variable "(\w+)" is equal to (\d+)')
+
+    @step(r'the variable "(\w+)" holds (\d+)')
+    @step(r'the variable "(\w+)" is equal to (\d+)')
     def just_pass(step, *args):
         pass
-    
+
     filename = bg_feature_name('simple')
     old = xunit_output.wrt_output
     xunit_output.wrt_output = assert_correct_xml

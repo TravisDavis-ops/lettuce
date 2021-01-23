@@ -19,7 +19,7 @@ import random
 import lettuce
 from mock import Mock, patch
 from sure import expect
-from StringIO import StringIO
+from io import StringIO
 from os.path import dirname, join, abspath
 from inspect import currentframe
 
@@ -1165,16 +1165,16 @@ def test_background_with_header():
 
     from lettuce import step, world
 
-    @step(ur'the variable "(\w+)" holds (\d+)')
+    @step(r'the variable "(\w+)" holds (\d+)')
     def set_variable(step, name, value):
         setattr(world, name, int(value))
 
-    @step(ur'the variable "(\w+)" is equal to (\d+)')
+    @step(r'the variable "(\w+)" is equal to (\d+)')
     def check_variable(step, name, expected):
         expected = int(expected)
         expect(world).to.have.property(name).being.equal(expected)
 
-    @step(ur'the variable "(\w+)" times (\d+) is equal to (\d+)')
+    @step(r'the variable "(\w+)" times (\d+) is equal to (\d+)')
     def multiply_and_verify(step, name, times, expected):
         times = int(times)
         expected = int(expected)
@@ -1212,16 +1212,16 @@ def test_background_without_header():
             'results': results,
         }
 
-    @step(ur'the variable "(\w+)" holds (\d+)')
+    @step(r'the variable "(\w+)" holds (\d+)')
     def set_variable(step, name, value):
         setattr(world, name, int(value))
 
-    @step(ur'the variable "(\w+)" is equal to (\d+)')
+    @step(r'the variable "(\w+)" is equal to (\d+)')
     def check_variable(step, name, expected):
         expected = int(expected)
         expect(world).to.have.property(name).being.equal(expected)
 
-    @step(ur'the variable "(\w+)" times (\d+) is equal to (\d+)')
+    @step(r'the variable "(\w+)" times (\d+) is equal to (\d+)')
     def multiply_and_verify(step, name, times, expected):
         times = int(times)
         expected = int(expected)
@@ -1255,8 +1255,8 @@ def test_output_background_with_success_colorless():
     from lettuce import step
 
     line = currentframe().f_lineno  # get line number
-    @step(ur'the variable "(\w+)" holds (\d+)')
-    @step(ur'the variable "(\w+)" is equal to (\d+)')
+    @step(r'the variable "(\w+)" holds (\d+)')
+    @step(r'the variable "(\w+)" is equal to (\d+)')
     def just_pass(step, *args):
         pass
 
@@ -1292,8 +1292,8 @@ def test_output_background_with_success_colorful():
     from lettuce import step
 
     line = currentframe().f_lineno  # get line number
-    @step(ur'the variable "(\w+)" holds (\d+)')
-    @step(ur'the variable "(\w+)" is equal to (\d+)')
+    @step(r'the variable "(\w+)" holds (\d+)')
+    @step(r'the variable "(\w+)" is equal to (\d+)')
     def just_pass(step, *args):
         pass
 
@@ -1334,16 +1334,16 @@ def test_background_with_scenario_before_hook():
     def reset_variable(scenario):
         world.X = None
 
-    @step(ur'the variable "(\w+)" holds (\d+)')
+    @step(r'the variable "(\w+)" holds (\d+)')
     def set_variable(step, name, value):
         setattr(world, name, int(value))
 
-    @step(ur'the variable "(\w+)" is equal to (\d+)')
+    @step(r'the variable "(\w+)" is equal to (\d+)')
     def check_variable(step, name, expected):
         expected = int(expected)
         expect(world).to.have.property(name).being.equal(expected)
 
-    @step(ur'the variable "(\w+)" times (\d+) is equal to (\d+)')
+    @step(r'the variable "(\w+)" times (\d+) is equal to (\d+)')
     def multiply_and_verify(step, name, times, expected):
         times = int(times)
         expected = int(expected)

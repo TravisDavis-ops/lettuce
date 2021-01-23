@@ -142,7 +142,7 @@ def test_column_width_w_number_and_char():
         strings.column_width( u"%s%c" % (u"4209", 0x4209)),
         6
     )
-    
+
 def test_rfill_simple():
     "strings.rfill simple case"
     assert_equals(
@@ -286,8 +286,8 @@ def test_parse_hashes_escapes_pipes():
 
     table = [
         u"| name              | age |\n",
-        u"| Gabriel \| Falcão | 22  |\n",
-        u"| Miguel \| Silva   | 33  |\n",
+        u"| Gabriel | Falcão | 22  |\n",
+        u"| Miguel | Silva   | 33  |\n",
     ]
 
     got_keys, got_dicts = strings.parse_hashes(table)

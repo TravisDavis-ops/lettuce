@@ -21,7 +21,7 @@ import sys
 import codecs
 import fnmatch
 import zipfile
-
+from importlib import reload
 from functools import wraps
 from glob import glob
 from os.path import abspath, join, dirname, curdir, exists
@@ -262,6 +262,6 @@ class FileSystem(object):
 
                 finally:
                     cls.popd()
-                
+
             return inner
         return decorator

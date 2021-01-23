@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
-from mox import Mox
+from mox3 import mox as Mox
 from nose.tools import assert_equals
 
 from lettuce import step
@@ -258,9 +258,10 @@ def test_after_each_all_is_executed_before_each_all():
     "terrain.before.each_all and terrain.after.each_all decorators"
     import lettuce
     from lettuce.fs import FeatureLoader
+    from mox3 import mox
     world.all_steps = []
 
-    mox = Mox()
+    mox = mox.Mox()
 
     loader_mock = mox.CreateMock(FeatureLoader)
     mox.StubOutWithMock(lettuce.sys, 'path')

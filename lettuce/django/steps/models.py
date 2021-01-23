@@ -241,7 +241,7 @@ def models_exist(model, data, queryset=None):
                 model.__name__, hash_, filtered.query)
 
     except AssertionError as exc:
-        print exc
+        print( exc)
         failed += 1
 
     if failed:

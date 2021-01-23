@@ -685,18 +685,12 @@ def test_single_scenario_many_scenarios():
     assert that(last_scenario.tags).equals([])
 
     result = feature.run()
-    print
-    print
     for sr in result.scenario_results:
         for failed in sr.steps_failed:
-            print "+" * 10
-            print
-            print failed.why.cause
-            print
-            print "+" * 10
+            print("+" * 10)
+            print(failed.why.cause)
+            print("+" * 10)
 
-    print
-    print
     assert result.passed
 
 

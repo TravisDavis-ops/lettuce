@@ -17,7 +17,7 @@
 
 import datetime
 import sys
-from StringIO import StringIO
+from io import StringIO
 
 from lettuce.terrain import before, after
 

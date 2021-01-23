@@ -345,7 +345,7 @@ def test_scenario_tables_are_solved_against_outlines():
 
     scenario = Scenario.from_string(OUTLINED_SCENARIO_WITH_SUBSTITUTIONS_IN_MULTILINE)
     step = scenario.solved_steps[0]
-    
+
     assert_equals(type(step), Step)
     assert_equals(step.multiline, expected_multiline)
 
@@ -435,7 +435,7 @@ def test_full_featured_feature():
     for ((got_examples, got_steps), (expected_examples, expected_steps)) in zip(scenario4.evaluated, expected_evaluated):
         sentences_of = lambda x: x.sentence
         assert_equals(got_examples, expected_examples)
-        assert_equals(map(sentences_of, got_steps), expected_steps)
+        assert_equals(list(map(sentences_of, got_steps)), expected_steps)
 
 def test_scenario_with_table_and_no_step_fails():
     "A step table imediately after the scenario line, without step line fails"

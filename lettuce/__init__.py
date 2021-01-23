@@ -50,7 +50,7 @@ from lettuce.plugins import (
 )
 from lettuce import fs
 from lettuce import exceptions
-
+from lettuce import terrain
 try:
     from colorama import init as ms_windows_workaround
     ms_windows_workaround()
@@ -69,18 +69,19 @@ __all__ = [
     'call_hook',
 ]
 
-try:
-    terrain = fs.FileSystem._import("terrain")
-    reload(terrain)
-except Exception as e:
-    if not "No module named terrain" in str(e):
-        string = 'Lettuce has tried to load the conventional environment ' \
-            'module "terrain"\nbut it has errors, check its contents and ' \
-            'try to run lettuce again.\n\nOriginal traceback below:\n\n'
-
-        sys.stderr.write(string)
-        sys.stderr.write(exceptions.traceback.format_exc(e))
-        raise LettuceRunnerError(string)
+#try:
+#    terrain = fs.FileSystem._import("terrain")
+#    reload(terrain)
+#except Exception as e:
+#    print(e)
+#    if not "No module named terrain" in str(e):
+#        string = 'Lettuce has tried to load the conventional environment ' \
+#            'module "terrain"\nbut it has errors, check its contents and ' \
+#            'try to run lettuce again.\n\nOriginal traceback below:\n\n'
+#
+#        sys.stderr.write(string)
+#        sys.stderr.write(exceptions.traceback.format_exc(e))
+#        raise LettuceRunnerError(string)
 
 
 class Runner(object):
@@ -169,7 +170,7 @@ class Runner(object):
         try:
             self.loader.find_and_load_step_definitions()
         except StepLoadingError as e:
-            print "Error loading step definitions:\n", e
+            print( "Error loading step definitions:\n", e)
             return
 
         call_hook('before', 'all')
@@ -177,6 +178,9 @@ class Runner(object):
         failed = False
         try:
             for filename in features_files:
+                print(self.__repr__())
+                print("Hello world")
+                print(filename)
                 feature = Feature.from_file(filename)
                 results.append(
                     feature.run(self.scenarios,
@@ -184,19 +188,18 @@ class Runner(object):
                                 random=self.random,
                                 failfast=self.failfast))
 
-        except exceptions.LettuceSyntaxError as e:
+        except exceptions.LettuceSyntaxError(e):
             sys.stderr.write(e.msg)
             failed = True
-        except exceptions.NoDefinitionFound, e:
+        except exceptions.NoDefinitionFound(e):
             sys.stderr.write(e.msg)
             failed = True
         except:
             if not self.failfast:
                 e = sys.exc_info()[1]
-                print "Died with %s" % str(e)
+                print( "Died with %s" % str(e))
                 traceback.print_exc()
             else:
-                print
                 print ("Lettuce aborted running any more tests "
                        "because was called with the `--failfast` option")
 
